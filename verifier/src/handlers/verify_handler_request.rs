@@ -63,10 +63,8 @@ pub async fn verify_signature_handler(
                 Json(VerifySignatureResponse { message: "Signature is valid and nonce accepted".to_string() }),
             ))
         }
-        Err(e) => {
-            Err(HandlerError::SignatureValidation(Json(
-                serde_json::json!({ "status": "error", "reason": "Invalid signature", "details": e.to_string() }),
-            )))
-        }
+        Err(e) => Err(HandlerError::SignatureValidation(Json(
+            serde_json::json!({ "status": "error", "reason": "Invalid signature", "details": e.to_string() }),
+        ))),
     }
 }

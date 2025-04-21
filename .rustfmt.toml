@@ -6,9 +6,6 @@ use_small_heuristics = "Max"
 reorder_imports = true
 group_imports = "StdExternalCrate"
 
-# Force multiline if needed
-force_multiline_blocks = true
-
 # Inline style
 match_block_trailing_comma = false
 

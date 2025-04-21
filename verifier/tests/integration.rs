@@ -11,7 +11,6 @@ use shared::{
 use verifier::{handlers::verify_handler_request::verify_signature_handler, state::AppState};
 
 #[tokio::test]
-
 async fn test_replay_attack_blocked() {
     let state = Arc::new(AppState::default());
 
