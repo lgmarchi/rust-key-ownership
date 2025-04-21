@@ -34,11 +34,11 @@ async fn main() -> anyhow::Result<()> {
 
     let res1 = client.post(&url).json(&signed).send().await?;
 
-    println!("✅ First response: {}", res1.status());
+    println!("First response: {}", res1.status());
 
     let res2 = client.post(&url).json(&signed).send().await?;
 
-    println!("⛔ Second response (should be 409): {}", res2.status());
+    println!("Second response (should be 409): {}", res2.status());
 
     Ok(())
 }

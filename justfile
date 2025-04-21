@@ -27,3 +27,6 @@ test-replay-attack:
 
 test-expired-nonce:
     cargo run --package holder --bin test_manual_expired_nonce
+
+test-rate-limit:
+    cargo run --package holder --bin test_manual_rate_limit

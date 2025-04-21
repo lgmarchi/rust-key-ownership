@@ -20,7 +20,8 @@ use crate::state::AppState;
         (status = 200, description = "OK", body = VerifySignatureResponse),
         (status = 400, description = "Invalid payload"),
         (status = 409, description = "Replay attack"),
-        (status = 401, description = "Invalid signature")
+        (status = 401, description = "Invalid signature"),
+        (status = 429, description = "Rate limit exceeded")
     )
 )]
 pub async fn verify_signature_handler(

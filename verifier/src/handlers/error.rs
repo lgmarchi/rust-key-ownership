@@ -5,7 +5,7 @@ use axum::{
 };
 use serde_json::json;
 use thiserror::Error;
-use tracing::error;
+use tracing::{error, warn};
 use validator::ValidationErrors;
 
 #[derive(Error, Debug)]
@@ -18,32 +18,57 @@ pub enum HandlerError {
 
     #[error("Signature verification failed")]
     SignatureValidation(Json<serde_json::Value>),
+
+    #[error("Rate limit exceeded")]
+    RateLimitExceeded,
 }
 
 impl IntoResponse for HandlerError {
     fn into_response(self) -> Response {
-        match self {
+        let (status, error_message) = match &self {
             HandlerError::PayloadValidation(e) => {
-                let body = json!({
-                    "status": "error",
-                    "reason": "Invalid payload",
-                    "details": e.to_string()
-                });
-
-                error!("Payload validation error: {}", body);
-
-                (StatusCode::BAD_REQUEST, Json(body)).into_response()
+                error!(
+                    error = ?e,
+                    "Payload validation failed: {}",
+                    e.to_string()
+                );
+                (StatusCode::BAD_REQUEST, e.to_string())
             }
-            HandlerError::ReplayAttack(json) => {
-                error!("Replay attack error: {}", json.to_string());
-
-                (StatusCode::CONFLICT, json).into_response()
+            HandlerError::ReplayAttack(response) => {
+                warn!(
+                    response = ?response,
+                    "Replay attack detected: {:?}",
+                    response
+                );
+                (StatusCode::CONFLICT, format!("{:?}", response))
             }
-            HandlerError::SignatureValidation(json) => {
-                error!("Signature validation error: {}", json.to_string());
-
-                (StatusCode::UNAUTHORIZED, json).into_response()
+            HandlerError::SignatureValidation(response) => {
+                error!(
+                    response = ?response,
+                    "Signature validation failed: {:?}",
+                    response
+                );
+                (StatusCode::UNAUTHORIZED, format!("{:?}", response))
             }
-        }
+            HandlerError::RateLimitExceeded => {
+                warn!("Rate limit exceeded for request");
+                (
+                    StatusCode::TOO_MANY_REQUESTS,
+                    json!({
+                        "status": "error",
+                        "reason": "Rate limit exceeded",
+                        "message": "Too many requests. Please try again later."
+                    })
+                    .to_string(),
+                )
+            }
+        };
+
+        let body = Json(json!({
+            "status": "error",
+            "message": error_message
+        }));
+
+        (status, body).into_response()
     }
 }

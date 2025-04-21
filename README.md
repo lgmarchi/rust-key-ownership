@@ -103,6 +103,12 @@ just test-replay-attack
 just test-expired-nonce
 ```
 
+3. Test Rate Limiting Scenario:
+
+```bash
+just test-rate-limit
+```
+
 ### Alternative: Manual Execution
 
 You can also run services individually using Cargo:

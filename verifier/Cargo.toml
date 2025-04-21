@@ -15,9 +15,11 @@ serde_json = "1"
 shared = { path = "../shared" }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+tower-http = { version = "0.5.0", features = ["limit", "timeout"] }
+tower = { version = "0.4", features = ["limit", "buffer"] }
 
 [dev-dependencies]
 verifier = { path = "." }
 uuid = { workspace = true }
 chrono = { workspace = true }
-base64 =  { workspace = true }
+base64 = { workspace = true }
