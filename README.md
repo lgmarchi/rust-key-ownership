@@ -7,7 +7,6 @@ A distributed system implemented in Rust that manages key ownership through mult
 This project demonstrates advanced Rust concepts including:
 
 - Microservices architecture
-- Secure key management
 - Replay attack protection
 - Asynchronous programming
 - REST API development
@@ -171,7 +170,6 @@ The system implements robust error handling with:
 
 - Replay attack protection
 - Nonce-based verification
-- Secure key storage
 - Request validation
 - Rate limiting
 
