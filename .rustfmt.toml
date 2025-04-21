@@ -1,0 +1,16 @@
+# Visual clean
+max_width = 120
+use_small_heuristics = "Max"
+
+# Imports
+reorder_imports = true
+group_imports = "StdExternalCrate"
+
+# Force multiline if needed
+force_multiline_blocks = true
+
+# Inline style
+match_block_trailing_comma = false
+
+# Stable options only (safe for CI)
+edition = "2021"

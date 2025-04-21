@@ -1,0 +1,16 @@
+[package]
+name = "holder"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenvy = "0.15"
+shared = { path = "../shared" }
+reqwest = { version = "0.11", features = ["json"] }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tokio = { workspace = true }
+base64 =  { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

@@ -1,6 +1,18 @@
-[package]
-name = "rust-key-ownership"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = ["holder", "verifier", "shared"]
+resolver = "2"
 
-[dependencies]
+[workspace.dependencies]
+axum = "0.7.0"
+validator = { version = "0.16", features = ["derive"] }
+utoipa = { version = "4", features = ["axum_extras", "uuid", "chrono"] }
+utoipa-swagger-ui = { version = "5", features = ["axum"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+tracing-log = "0.1"
+anyhow = "1.0"
+thiserror = "1.0"
+base64 = "0.21"
+tokio = { version = "1", features = ["full"] }
+uuid = { version = "1", features = ["v4"] }
+chrono = "0.4"
